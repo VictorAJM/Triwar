@@ -1,7 +1,8 @@
 #pragma once
 #include "Entity.h"
 #include "writer.h"
-class Structure : Entity {
+#include "hitBox.h"
+class Structure : public Entity {
     int x,y,w,h;
     public:
         Structure(int _x, int _y, int _w, int _h, char _type, char _race): x(_x), y(_y), w(_w), h(_h), Entity(_type, _race) {}
@@ -24,5 +25,13 @@ class Structure : Entity {
                     printf(" ");
                 }
             }
+        }
+        hitBox getHitBox() {
+            hitBox myHitBox;
+            myHitBox.x = X();
+            myHitBox.y = Y();
+            myHitBox.w = W();
+            myHitBox.h = H();
+            return myHitBox;
         }
 };
