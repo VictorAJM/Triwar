@@ -28,6 +28,14 @@ int main()
         minerals.push_back(new Mineral(x,y));
     }
     Sleep(1000);
+    vector<Worker*> workers;
+    for (int i=0;i<5;i++) {
+        workers.push_back(new Worker(base1->X()+i,base1->Y()-1,'a'));
+        workers.push_back(new Worker(base2->X()+i,base2->Y()-1,'b'));
+        workers.push_back(new Worker(base3->X()+i,base3->Y()-1,'c'));
+    }
+    Sleep(1000);
+    for (auto _worker : workers) _worker->paint();
     for (auto mineral : minerals) mineral->paint();
     while (!game_over) {
 
