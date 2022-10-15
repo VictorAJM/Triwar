@@ -1,3 +1,4 @@
+#pragma once
 #include "consts.h"
 void gotoXY(int x, int y)
 {
