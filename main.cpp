@@ -2,6 +2,7 @@
 #include "writer.h"
 #include "Entities.h"
 #include "hitBox.h"
+#include "Movements.h"
 int main()
 {
     srand(time(NULL));
@@ -37,8 +38,13 @@ int main()
     Sleep(1000);
     for (auto _worker : workers) _worker->paint();
     for (auto mineral : minerals) mineral->paint();
+    vector<Base*> bases;
+    bases.push_back(base1); bases.push_back(base2); bases.push_back(base3);
     while (!game_over) {
-
+        for (auto _worker : workers) {
+            moveWorker(_worker, workers, minerals, bases);
+            Sleep(100);
+        }
     }
     return 0;
 }
