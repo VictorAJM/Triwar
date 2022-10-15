@@ -5,3 +5,4 @@
 #include "Mineral.h"
 #include "Unit.h"
 #include "Worker.h"
+#include "Soldier.h"

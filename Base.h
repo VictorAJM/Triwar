@@ -6,4 +6,5 @@ class Base : public Structure {
     public:
         Base(int _x, int _y, char _race): gold(0), Structure(_x, _y, 10, 10, 'B', _race) {}
         int GOLD() { return gold; }
+        int addGold(int _gold) { gold += _gold; }
 };
