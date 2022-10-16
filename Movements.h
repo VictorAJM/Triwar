@@ -154,10 +154,13 @@ void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minera
         }
         int myDistance = distance[worker->X()][worker->Y()];
         if (myDistance <= 1) {
-            worker->paint();
-            worker->setGold(0);
-            for (auto _base : bases)if (_base->RACE() == worker->RACE()) _base->addGold(50);
-            return;
+            for (auto _base : bases)if (_base->RACE() == worker->RACE()) {
+                worker->setGold(0);
+                _base->addGold(50);
+                worker->paint();
+                return;
+            }
+            
         } 
         if (worker->X()>LEFT_MAP && distance[worker->X()-1][worker->Y()] < myDistance) {
             myDistance = distance[worker->X()-1][worker->Y()];
@@ -268,6 +271,13 @@ void moveSoldier(Soldier* soldier, vector<Worker*> workers, vector<Mineral*> min
             soldier->setY(soldier->Y()-1);
         } else if (soldier->Y()<BOT_MAP && distance[soldier->X()][soldier->Y()+1] == myDistance) {
             soldier->setY(soldier->Y()+1);   
+        }
+        for(int i=0;i<workers.size();i++) if (soldier->getHitBox().collisionWith(workers[i]->getHitBox())) {
+            workers[i]->erase();
+            auto a = workers[i];
+            workers.erase(workers.begin()+i);
+            delete a;
+            i=0;
         }
         soldier->paint(); 
 }

@@ -44,17 +44,17 @@ int main()
     while (!game_over) {
         for (auto _worker : workers) {
             moveWorker(_worker, workers, minerals, bases,soldiers);
-            Sleep(50);
+            Sleep(20);
         }
         for (auto _soldier : soldiers) {
             moveSoldier(_soldier, workers,minerals,bases,soldiers);
-            Sleep(50);
+            Sleep(20);
         }
         for (auto _base : bases) {
             if (_base->GOLD() >= 60) {
                 soldiers.push_back(new Soldier(_base->X(),_base->Y()+_base->H(),_base->RACE()));
                 _base->addGold(-60);
-                Sleep(60);
+                Sleep(20);
             }
         }
     }

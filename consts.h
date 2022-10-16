@@ -6,6 +6,8 @@
 #include <string>
 #include <time.h>
 #include <queue>
+#include <set>
+
 #define LEFT_MAP 3
 #define RIGHT_MAP 146
 #define TOP_MAP 4
@@ -14,3 +16,4 @@
 using namespace std;
 
 vector<string> charMap;
+set<int> entitiesID;
