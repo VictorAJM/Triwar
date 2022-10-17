@@ -13,5 +13,6 @@ class Entity {
             entitiesID.insert(id);
         }
         char TYPE() { return type;}
-        char RACE() { return race;}      
+        char RACE() { return race;}  
+        int ID() { return id;}    
 };

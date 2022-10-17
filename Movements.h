@@ -2,7 +2,7 @@
 #include "consts.h"
 #include "Entities.h"
 
-void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minerals,vector<Base*> bases, vector<Soldier*> soldiers) 
+void moveWorker(Worker* worker, vector<Worker*> &workers, vector<Mineral*> &minerals,vector<Base*> &bases, vector<Soldier*> &soldiers) 
 {
     worker->erase();
     if (worker->GOLD() == 0) {
@@ -36,7 +36,7 @@ void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minera
             }
         }
         for (auto _worker : workers) {
-            visited[_worker->X()][_worker->Y()] = true;
+            if (worker->ID() != _worker->ID()) visited[_worker->X()][_worker->Y()] = true;
         }
         for (auto _soldier : soldiers) {
             visited[_soldier->X()][_soldier->Y()] = true;
@@ -66,22 +66,30 @@ void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minera
         int myDistance = distance[worker->X()][worker->Y()];
         if (myDistance <= 1) {
             worker->paint();
-            worker->setGold(50);
+            worker->setGold(30);
             return;
         } 
+        bool moved = false;
         if (worker->X()>LEFT_MAP && distance[worker->X()-1][worker->Y()] < myDistance) {
             myDistance = distance[worker->X()-1][worker->Y()];
+            moved = true;
         } 
         if (worker->X()<RIGHT_MAP && distance[worker->X()+1][worker->Y()] < myDistance) {
             myDistance = distance[worker->X()+1][worker->Y()];
+            moved = true;
         } 
         if (worker->Y()>TOP_MAP && distance[worker->X()][worker->Y()-1] < myDistance) {
             myDistance = distance[worker->X()][worker->Y()-1];
+            moved = true;
         } 
         if (worker->Y()<BOT_MAP && distance[worker->X()][worker->Y()+1] < myDistance) {
             myDistance = distance[worker->X()][worker->Y()+1];
+            moved = true;
         } 
-
+        if (!moved) {
+            worker->paint();
+            return;
+        }
         if (worker->X()>LEFT_MAP && distance[worker->X()-1][worker->Y()] == myDistance) {
             worker->setX(worker->X()-1);
         } else if (worker->X()<RIGHT_MAP && distance[worker->X()+1][worker->Y()] == myDistance) {
@@ -126,7 +134,7 @@ void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minera
             }
         }
         for (auto _worker : workers) {
-            visited[_worker->X()][_worker->Y()] = true;
+            if (worker->ID() != _worker->ID()) visited[_worker->X()][_worker->Y()] = true;
         }
         for (auto _soldier : soldiers) {
             visited[_soldier->X()][_soldier->Y()] = true;
@@ -153,10 +161,11 @@ void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minera
             } 
         }
         int myDistance = distance[worker->X()][worker->Y()];
+        bool moved = false;
         if (myDistance <= 1) {
             for (auto _base : bases)if (_base->RACE() == worker->RACE()) {
+                _base->addGold(worker->GOLD());
                 worker->setGold(0);
-                _base->addGold(50);
                 worker->paint();
                 return;
             }
@@ -164,17 +173,24 @@ void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minera
         } 
         if (worker->X()>LEFT_MAP && distance[worker->X()-1][worker->Y()] < myDistance) {
             myDistance = distance[worker->X()-1][worker->Y()];
+            moved = true;
         } 
         if (worker->X()<RIGHT_MAP && distance[worker->X()+1][worker->Y()] < myDistance) {
             myDistance = distance[worker->X()+1][worker->Y()];
+            moved = true;
         } 
         if (worker->Y()>TOP_MAP && distance[worker->X()][worker->Y()-1] < myDistance) {
             myDistance = distance[worker->X()][worker->Y()-1];
+            moved = true;
         }
         if (worker->Y()<BOT_MAP && distance[worker->X()][worker->Y()+1] < myDistance) {
             myDistance = distance[worker->X()][worker->Y()+1];
+            moved = true;
         } 
-
+        if (!moved) {
+            worker->paint();
+            return;
+        }
         if (worker->X()>LEFT_MAP && distance[worker->X()-1][worker->Y()] == myDistance) {
             worker->setX(worker->X()-1);
         } else if (worker->X()<RIGHT_MAP && distance[worker->X()+1][worker->Y()] == myDistance) {
@@ -189,7 +205,7 @@ void moveWorker(Worker* worker, vector<Worker*> workers, vector<Mineral*> minera
 }
 
 
-void moveSoldier(Soldier* soldier, vector<Worker*> workers, vector<Mineral*> minerals, vector<Base*> bases, vector<Soldier*> soldiers)
+void moveSoldier(Soldier* soldier, vector<Worker*> &workers, vector<Mineral*> &minerals, vector<Base*> &bases, vector<Soldier*> &soldiers)
 {
     soldier->erase();
     bool visited[150][40];
@@ -226,7 +242,8 @@ void moveSoldier(Soldier* soldier, vector<Worker*> workers, vector<Mineral*> min
         visited[_worker->X()][_worker->Y()] = true;
     }
     for (auto _soldier : soldiers) {
-        visited[_soldier->X()][_soldier->Y()] = true;
+        if (_soldier->RACE() != soldier->RACE()) dist_to_worker.push({{_soldier->X(),_soldier->Y()},0});
+        if (soldier->ID() != _soldier->ID())visited[_soldier->X()][_soldier->Y()] = true;
     }
         while (!dist_to_worker.empty()) {
             auto dist = dist_to_worker.front();
@@ -250,19 +267,27 @@ void moveSoldier(Soldier* soldier, vector<Worker*> workers, vector<Mineral*> min
             } 
         }
         int myDistance = distance[soldier->X()][soldier->Y()];
+        bool moved = false;
         if (soldier->X()>LEFT_MAP && distance[soldier->X()-1][soldier->Y()] < myDistance) {
             myDistance = distance[soldier->X()-1][soldier->Y()];
+            moved = true;
         } 
         if (soldier->X()<RIGHT_MAP && distance[soldier->X()+1][soldier->Y()] < myDistance) {
             myDistance = distance[soldier->X()+1][soldier->Y()];
+            moved = true;
         } 
         if (soldier->Y()>TOP_MAP && distance[soldier->X()][soldier->Y()-1] < myDistance) {
             myDistance = distance[soldier->X()][soldier->Y()-1];
+            moved = true;
         }
         if (soldier->Y()<BOT_MAP && distance[soldier->X()][soldier->Y()+1] < myDistance) {
             myDistance = distance[soldier->X()][soldier->Y()+1];
+            moved = true;
         } 
-
+        if (!moved) {
+            soldier->paint();
+            return;
+        }
         if (soldier->X()>LEFT_MAP && distance[soldier->X()-1][soldier->Y()] == myDistance) {
             soldier->setX(soldier->X()-1);
         } else if (soldier->X()<RIGHT_MAP && distance[soldier->X()+1][soldier->Y()] == myDistance) {
@@ -277,6 +302,11 @@ void moveSoldier(Soldier* soldier, vector<Worker*> workers, vector<Mineral*> min
             auto a = workers[i];
             workers.erase(workers.begin()+i);
             delete a;
+            i=0;
+        }
+        for(int i=0;i<soldiers.size();i++) if (soldier->ID() != soldiers[i]->ID() && soldier->getHitBox().collisionWith(soldiers[i]->getHitBox())) {
+            soldiers[i]->erase();
+            soldiers.erase(soldiers.begin()+i);
             i=0;
         }
         soldier->paint(); 

@@ -3,6 +3,7 @@
 #include "Entities.h"
 #include "hitBox.h"
 #include "Movements.h"
+#include "Actions.h"
 int main()
 {
     srand(time(NULL));
@@ -44,19 +45,21 @@ int main()
     while (!game_over) {
         for (auto _worker : workers) {
             moveWorker(_worker, workers, minerals, bases,soldiers);
-            Sleep(20);
+           // Sleep(2);
+            for (auto _base : bases) {
+                actionBase(_base, bases, workers, soldiers, minerals);
+               // Sleep(20);
+            }
         }
         for (auto _soldier : soldiers) {
             moveSoldier(_soldier, workers,minerals,bases,soldiers);
-            Sleep(20);
-        }
-        for (auto _base : bases) {
-            if (_base->GOLD() >= 60) {
-                soldiers.push_back(new Soldier(_base->X(),_base->Y()+_base->H(),_base->RACE()));
-                _base->addGold(-60);
-                Sleep(20);
+            //Sleep(2);
+            for (auto _base : bases) {
+                actionBase(_base, bases, workers, soldiers, minerals);
+               // Sleep(20);
             }
         }
+        Sleep(20);
     }
     return 0;
 }
