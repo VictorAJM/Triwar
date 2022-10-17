@@ -4,6 +4,7 @@
 #include "hitBox.h"
 #include "Movements.h"
 #include "Actions.h"
+#include "Endgame.h"
 int main()
 {
     srand(time(NULL));
@@ -59,7 +60,8 @@ int main()
                // Sleep(20);
             }
         }
-        Sleep(20);
+        game_over = getWinner(workers, soldiers);
+        //Sleep(20);
     }
     return 0;
 }

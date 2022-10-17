@@ -7,6 +7,7 @@
 #include <time.h>
 #include <queue>
 #include <set>
+#include <map>
 
 #define LEFT_MAP 3
 #define RIGHT_MAP 146
