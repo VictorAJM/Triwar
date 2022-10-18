@@ -16,6 +16,16 @@ bool getWinner(entities &allEntities)
             allEntities.bases.erase(allEntities.bases.begin()+i);
             i=0;
         }
+        for (int i=0;i<allEntities.worker_generators.size();i++) if (frecuency.first==allEntities.worker_generators[i]->RACE()) {
+            allEntities.worker_generators[i]->erase();
+            allEntities.worker_generators.erase(allEntities.worker_generators.begin()+i);
+            i=0;
+        }
+        for (int i=0;i<allEntities.soldier_generators.size();i++) if (frecuency.first==allEntities.soldier_generators[i]->RACE()) {
+            allEntities.soldier_generators[i]->erase();
+            allEntities.soldier_generators.erase(allEntities.soldier_generators.begin()+i);
+            i=0;
+        }
     }
     for (auto frecuency : race_frecuency) if (frecuency.second == int(allEntities.workers.size()+allEntities.soldiers.size())) {
         gotoXY(1,1);

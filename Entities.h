@@ -13,5 +13,6 @@ struct entities {
     vector<Worker*> workers;
     vector<Soldier*> soldiers;
     vector<Mineral*> minerals;
-    //
+    vector<Worker_Generator*> worker_generators;
+    vector<Soldier_Generator*> soldier_generators;
 };

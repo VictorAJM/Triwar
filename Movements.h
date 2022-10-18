@@ -36,6 +36,24 @@ void moveWorker(Worker* worker, entities &allEntities)
                 }
             }
         }
+        for (auto wg : allEntities.worker_generators) {
+            int w = wg->W();
+            int h = wg->H();
+            for (int i=wg->X();i<wg->X()+w;i++) {
+                for (int j=wg->Y();j<wg->Y()+h;j++) {
+                    visited[i][j]=true;
+                }
+            }
+        }
+        for (auto sg : allEntities.soldier_generators) {
+            int w = sg->W();
+            int h = sg->H();
+            for (int i=sg->X();i<sg->X()+w;i++) {
+                for (int j=sg->Y();j<sg->Y()+h;j++) {
+                    visited[i][j]=true;
+                }
+            }
+        }
         for (auto _worker : allEntities.workers) {
             if (worker->ID() != _worker->ID()) visited[_worker->X()][_worker->Y()] = true;
         }
@@ -150,6 +168,24 @@ void moveWorker(Worker* worker, entities &allEntities)
                 }
             }
         }
+        for (auto wg : allEntities.worker_generators) {
+            int w = wg->W();
+            int h = wg->H();
+            for (int i=wg->X();i<wg->X()+w;i++) {
+                for (int j=wg->Y();j<wg->Y()+h;j++) {
+                    visited[i][j]=true;
+                }
+            }
+        }
+        for (auto sg : allEntities.soldier_generators) {
+            int w = sg->W();
+            int h = sg->H();
+            for (int i=sg->X();i<sg->X()+w;i++) {
+                for (int j=sg->Y();j<sg->Y()+h;j++) {
+                    visited[i][j]=true;
+                }
+            }
+        }
         for (auto _worker : allEntities.workers) {
             if (worker->ID() != _worker->ID()) visited[_worker->X()][_worker->Y()] = true;
         }
@@ -249,6 +285,24 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
         int h = _base->H();
         for (int i=_base->X();i<_base->X()+w;i++) {
             for (int j=_base->Y();j<_base->Y()+h;j++) {
+                visited[i][j]=true;
+            }
+        }
+    }
+    for (auto wg : allEntities.worker_generators) {
+        int w = wg->W();
+        int h = wg->H();
+        for (int i=wg->X();i<wg->X()+w;i++) {
+            for (int j=wg->Y();j<wg->Y()+h;j++) {
+                visited[i][j]=true;
+            }
+        }
+    }
+    for (auto sg : allEntities.soldier_generators) {
+        int w = sg->W();
+        int h = sg->H();
+        for (int i=sg->X();i<sg->X()+w;i++) {
+            for (int j=sg->Y();j<sg->Y()+h;j++) {
                 visited[i][j]=true;
             }
         }
