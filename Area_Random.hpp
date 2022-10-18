@@ -1,3 +1,4 @@
+#pragma once
 #include "consts.h"
 #include "Entities.h"
 #include "hitBox.h"

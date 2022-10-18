@@ -1,6 +1,4 @@
 ///TODO:
-// create allEntities struct
-// erase and generate more minerals 
 // clean files
 // create Unit's Structures 
 // improve random chooser action
@@ -9,6 +7,7 @@
 // add Units skills and statics
 // Add skill's Structures
 // Add threads to the last Structures Units and Skills
+// Agregar colores a todo
 
 // Save current state of game in files
 
@@ -49,9 +48,6 @@ int main()
             allEntities.workers.push_back(new Worker(base->X()+i,base->Y()-1,base->RACE()));
         }
     }
-
-
-
     for (auto _base : allEntities.bases) _base->paint();
     for (auto _worker : allEntities.workers) _worker->paint();
     for (auto mineral : allEntities.minerals) mineral->paint();
