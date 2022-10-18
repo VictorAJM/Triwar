@@ -67,7 +67,7 @@ int main()
             actionBase(_base, allEntities);
             drawStats(allEntities);
         }
-
+    
         game_over = getWinner(allEntities);
         Sleep(MICRO_DURATION);
     }

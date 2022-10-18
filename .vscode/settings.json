@@ -7,7 +7,8 @@
     "string": "cpp",
     "xstring": "cpp",
     "type_traits": "cpp",
-    "new": "cpp"
+    "new": "cpp",
+    "iostream": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
