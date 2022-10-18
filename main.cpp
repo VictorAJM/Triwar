@@ -1,3 +1,20 @@
+///TODO:
+// generate minerals and bases randomly
+// erase and generate more minerals 
+// clean files
+// create Unit's Structures 
+// improve random chooser action
+// Add Unit's Structures (working?)
+// OMG luismi
+// add Units skills and statics
+// Add skill's Structures
+// Add threads to the last Structures Units and Skills
+
+// Save current state of game in files
+
+// FINISH :)
+
+
 #include "consts.h"
 #include "writer.h"
 #include "Entities.h"
@@ -18,13 +35,13 @@ int main()
     Base* base3 = new Base(120,10,'c');
 
     vector<Mineral*> minerals;
-    for (int i=0;i<5;i++) {
+    for (int i=0;i<10;i++) {
         int x,y;
         bool choque = false;
         do {
-            x = rand()%128+6;
-            y = rand()%28+6;
-            hitBox thisHitBox(x-1,y-1,5,5);
+            x = rand()%130+5;
+            y = rand()%30+5;
+            hitBox thisHitBox(x,y,3,3);
             if (thisHitBox.collisionWith(base1->getHitBox())) choque = true;
             if (thisHitBox.collisionWith(base2->getHitBox())) choque = true;
             if (thisHitBox.collisionWith(base3->getHitBox())) choque = true;
