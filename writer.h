@@ -37,15 +37,15 @@ void pintar_limites()
 {
     limpiar_pantalla();
     for (int i=2;i<148;i++) {
-        gotoXY(i,3); printf("%c",205); charMap[i][3] = 205;
-        gotoXY(i,39); printf("%c",205);charMap[i][39] = 205;
+        gotoXY(i,3); printf("%c",205); charMap[i][3] = (char)205;
+        gotoXY(i,39); printf("%c",205);charMap[i][39] = (char)205;
     }
     for (int i=4;i<39;i++) {
-        gotoXY(2,i); printf("%c",186); charMap[2][i] = 186;
-        gotoXY(147,i); printf("%c",186); charMap[147][i] = 186;
+        gotoXY(2,i); printf("%c",186); charMap[2][i] = (char)186;
+        gotoXY(147,i); printf("%c",186); charMap[147][i] = (char)186;
     }
-    gotoXY(2,3); charMap[2][3] = 201; printf("%c",201);
-    gotoXY(2,39); printf("%c",200); charMap[2][39] = 200;
-    gotoXY(147,3); printf("%c",187); charMap[147][3] = 187;
-    gotoXY(147,39); printf("%c",188); charMap[147][39] = 188;
+    gotoXY(2,3); charMap[2][3] = (char)201; printf("%c",201);
+    gotoXY(2,39); printf("%c",200); charMap[2][39] = (char)200;
+    gotoXY(147,3); printf("%c",187); charMap[147][3] = (char)187;
+    gotoXY(147,39); printf("%c",188); charMap[147][39] = (char)188;
 }

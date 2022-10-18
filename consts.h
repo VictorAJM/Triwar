@@ -13,6 +13,7 @@
 #define RIGHT_MAP 146
 #define TOP_MAP 4
 #define BOT_MAP 38
+#define MICRO_DURATION 0
 
 using namespace std;
 

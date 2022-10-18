@@ -297,14 +297,14 @@ void moveSoldier(Soldier* soldier, vector<Worker*> &workers, vector<Mineral*> &m
         } else if (soldier->Y()<BOT_MAP && distance[soldier->X()][soldier->Y()+1] == myDistance) {
             soldier->setY(soldier->Y()+1);   
         }
-        for(int i=0;i<workers.size();i++) if (soldier->getHitBox().collisionWith(workers[i]->getHitBox())) {
+        for(int i=0;i<(int)workers.size();i++) if (soldier->getHitBox().collisionWith(workers[i]->getHitBox())) {
             workers[i]->erase();
             auto a = workers[i];
             workers.erase(workers.begin()+i);
             delete a;
             i=0;
         }
-        for(int i=0;i<soldiers.size();i++) if (soldier->ID() != soldiers[i]->ID() && soldier->getHitBox().collisionWith(soldiers[i]->getHitBox())) {
+        for(int i=0;i<(int)soldiers.size();i++) if (soldier->ID() != soldiers[i]->ID() && soldier->getHitBox().collisionWith(soldiers[i]->getHitBox())) {
             soldiers[i]->erase();
             soldiers.erase(soldiers.begin()+i);
             i=0;

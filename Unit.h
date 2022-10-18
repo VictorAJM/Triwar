@@ -5,7 +5,7 @@
 class Unit : public Entity {
     int x,y,speed,health,damage;
     public:
-        Unit(int _x, int _y, char _type, char _race): x(_x), y(_y) , Entity(_type, _race) {}
+        Unit(int _x, int _y, char _type, char _race): Entity(_type, _race), x(_x), y(_y)  {}
         int SPEED() { return speed;}
         int HEALTH() { return health;}
         int DAMAGE() { return damage;}
@@ -14,8 +14,8 @@ class Unit : public Entity {
         void setDamage(int _damage) { damage = _damage; }
         int X() { return x;}
         int Y() { return y;}
-        int setX(int _x) { x = _x;}
-        int setY(int _y) { y = _y;}
+        void setX(int _x) { x = _x;}
+        void setY(int _y) { y = _y;}
         hitBox getHitBox() {
             return hitBox(X(),Y(),1,1);
         }
