@@ -6,3 +6,12 @@
 #include "Unit.h"
 #include "Worker.h"
 #include "Soldier.h"
+#include "Generators.hpp"
+
+struct entities {
+    vector<Base*> bases;
+    vector<Worker*> workers;
+    vector<Soldier*> soldiers;
+    vector<Mineral*> minerals;
+    //
+};

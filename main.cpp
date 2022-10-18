@@ -1,5 +1,5 @@
 ///TODO:
-// generate minerals and bases randomly
+// create allEntities struct
 // erase and generate more minerals 
 // clean files
 // create Unit's Structures 
@@ -23,64 +23,56 @@
 #include "Actions.h"
 #include "Endgame.h"
 #include "StatsBar.h"
+#include "Area_Random.hpp"
 int main()
 {
-    //srand(time(NULL));
+    srand(time(NULL));
     crearCharMatrix();
     ocultarCursor();
     pintar_limites();
     bool game_over = false;
-    Base* base1 = new Base(10,10,'a');
-    Base* base2 = new Base(65,25,'b');
-    Base* base3 = new Base(120,10,'c');
 
-    vector<Mineral*> minerals;
-    for (int i=0;i<10;i++) {
-        int x,y;
-        bool choque = false;
-        do {
-            x = rand()%130+5;
-            y = rand()%30+5;
-            hitBox thisHitBox(x,y,3,3);
-            if (thisHitBox.collisionWith(base1->getHitBox())) choque = true;
-            if (thisHitBox.collisionWith(base2->getHitBox())) choque = true;
-            if (thisHitBox.collisionWith(base3->getHitBox())) choque = true;
-            for (auto mineral : minerals) if (thisHitBox.collisionWith(mineral->getHitBox())) choque = true;
-        } while (choque);
-        minerals.push_back(new Mineral(x,y));
+    entities allEntities;
+    for (int i=0;i<3;i++) {
+        pair<int,int> coords = AreaRandom::getPosition(10,10,allEntities);
+        allEntities.bases.push_back(new Base(coords.first,coords.second,'a'+i));
+    }
+
+    for (int i=0;i<15;i++) {
+        pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
+        allEntities.minerals.push_back(new Mineral(coords.first,coords.second));
     }
     Sleep(1000);
-    vector<Worker*> workers;
+
     for (int i=0;i<5;i++) {
-        workers.push_back(new Worker(base1->X()+i,base1->Y()-1,'a'));
-        workers.push_back(new Worker(base2->X()+i,base2->Y()-1,'b'));
-        workers.push_back(new Worker(base3->X()+i,base3->Y()-1,'c'));
+        for (auto base : allEntities.bases) {
+            allEntities.workers.push_back(new Worker(base->X()+i,base->Y()-1,base->RACE()));
+        }
     }
 
-    vector<Base*> bases;
-    bases.push_back(base1); bases.push_back(base2); bases.push_back(base3);
-    vector<Soldier*> soldiers;
-    for (auto _base : bases) _base->paint();
-    for (auto _worker : workers) _worker->paint();
-    for (auto mineral : minerals) mineral->paint();
-    drawStats(workers, soldiers, bases);
+
+
+    for (auto _base : allEntities.bases) _base->paint();
+    for (auto _worker : allEntities.workers) _worker->paint();
+    for (auto mineral : allEntities.minerals) mineral->paint();
+    drawStats(allEntities);
     while (!game_over) {
-        for (auto _worker : workers) {
-            moveWorker(_worker, workers, minerals, bases,soldiers);
+        for (auto _worker : allEntities.workers) {
+            moveWorker(_worker, allEntities);
             Sleep(MICRO_DURATION);
-            drawStats(workers, soldiers, bases);
+            drawStats(allEntities);
         }
-        for (auto _soldier : soldiers) {
-            moveSoldier(_soldier, workers, minerals, bases, soldiers);
+        for (auto _soldier : allEntities.soldiers) {
+            moveSoldier(_soldier, allEntities);
             Sleep(MICRO_DURATION);
-            drawStats(workers, soldiers, bases);
+            drawStats(allEntities);
         }
-        for (auto _base : bases) {
-            actionBase(_base, bases, workers, soldiers, minerals);
-            drawStats(workers, soldiers, bases);
+        for (auto _base : allEntities.bases) {
+            actionBase(_base, allEntities);
+            drawStats(allEntities);
         }
 
-        game_over = getWinner(workers, soldiers, bases);
+        game_over = getWinner(allEntities);
         Sleep(MICRO_DURATION);
     }
     return 0;
