@@ -97,10 +97,12 @@ void moveWorker(Worker* worker, entities &allEntities)
                     allEntities.minerals.erase(allEntities.minerals.begin()+i);
                     i=0;
                 }
-            pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
-            Mineral* mineral = new Mineral(coords.first,coords.second);
-            mineral->paint();
-            allEntities.minerals.push_back(mineral);
+                pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
+                if (coords.first != 0) {
+                    Mineral* mineral = new Mineral(coords.first,coords.second);
+                    mineral->paint();
+                    allEntities.minerals.push_back(mineral);
+                }
             }
             return;
         } 
@@ -307,6 +309,7 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
             }
         }
     }
+    
     for (auto _worker : allEntities.workers) {
         if (_worker->RACE() != soldier->RACE()) dist_to_worker.push({{_worker->X(),_worker->Y()},0});
         visited[_worker->X()][_worker->Y()] = true;
@@ -337,6 +340,52 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
             } 
         }
         int myDistance = distance[soldier->X()][soldier->Y()];
+        if (myDistance == 1) {
+            for (int i=0;i<allEntities.workers.size();i++) {
+                if (allEntities.workers[i]->RACE() != soldier->RACE() && allEntities.workers[i]->getHitBox().shareSide(soldier->getHitBox())) {
+                    if (soldier->DAMAGE() >= allEntities.workers[i]->HEALTH()) {
+                        allEntities.workers[i]->erase();
+                        allEntities.workers.erase(allEntities.workers.begin()+i);
+                        i=0;
+                    }
+                }
+            }
+            for (int i=0;i<allEntities.workers.size();i++) {
+                if (allEntities.workers[i]->RACE() != soldier->RACE() && allEntities.workers[i]->getHitBox().shareSide(soldier->getHitBox())) {
+                    allEntities.workers[i]->setHealth(allEntities.workers[i]->HEALTH()-soldier->DAMAGE());
+                }
+            }
+            int myDamage = 0;
+            for (int i=0;i<allEntities.soldiers.size();i++) if (allEntities.soldiers[i]->RACE() != soldier->RACE()) {
+                if (allEntities.soldiers[i]->getHitBox().shareSide(soldier->getHitBox())) {
+                   if (soldier->DAMAGE() >= allEntities.soldiers[i]->HEALTH()) {
+                        allEntities.soldiers[i]->erase();
+                        myDamage += allEntities.soldiers[i]->DAMAGE();
+                        allEntities.soldiers.erase(allEntities.soldiers.begin()+i);
+                        i=0;
+                    }
+                }
+            }
+            for (int i=0;i<allEntities.soldiers.size();i++) if (allEntities.soldiers[i]->RACE() != soldier->RACE()) {
+                if (allEntities.soldiers[i]->getHitBox().shareSide(soldier->getHitBox())) {
+                   allEntities.soldiers[i]->setHealth(allEntities.soldiers[i]->HEALTH()-soldier->DAMAGE());
+                }
+            }
+            if (myDamage >= soldier->HEALTH()) {
+                int id = soldier->ID();
+                for (int i=0;i<allEntities.soldiers.size();i++) {
+                    if (allEntities.soldiers[i]->ID() == id) {
+                        allEntities.soldiers[i]->erase();
+                        allEntities.soldiers.erase(allEntities.soldiers.begin()+i);
+                        i=0;
+                    }
+                }
+            } else {
+                soldier->setHealth(soldier->HEALTH() - myDamage);
+                soldier->paint();
+            }
+            return;
+        }
         bool moved = false;
         if (soldier->X()>LEFT_MAP && distance[soldier->X()-1][soldier->Y()] < myDistance) {
             myDistance = distance[soldier->X()-1][soldier->Y()];
@@ -366,18 +415,6 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
             soldier->setY(soldier->Y()-1);
         } else if (soldier->Y()<BOT_MAP && distance[soldier->X()][soldier->Y()+1] == myDistance) {
             soldier->setY(soldier->Y()+1);   
-        }
-        for(int i=0;i<(int)allEntities.workers.size();i++) if (soldier->getHitBox().collisionWith(allEntities.workers[i]->getHitBox())) {
-            allEntities.workers[i]->erase();
-            
-            allEntities.workers.erase(allEntities.workers.begin()+i);
-         
-            i=0;
-        }
-        for(int i=0;i<(int)allEntities.soldiers.size();i++) if (soldier->ID() != allEntities.soldiers[i]->ID() && soldier->getHitBox().collisionWith(allEntities.soldiers[i]->getHitBox())) {
-            allEntities.soldiers[i]->erase();
-            allEntities.soldiers.erase(allEntities.soldiers.begin()+i);
-            i=0;
         }
         soldier->paint();
 }

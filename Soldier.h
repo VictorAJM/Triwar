@@ -2,5 +2,8 @@
 
 class Soldier : public Unit {
     public:
-        Soldier(int _x, int _y, char _race): Unit(_x, _y, 'S', _race) {}
+        Soldier(int _x, int _y, char _race): Unit(_x, _y, 'S', _race) {
+            setDamage(20);
+            setHealth(40);
+        }
 };

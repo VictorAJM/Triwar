@@ -1,5 +1,4 @@
 ///TODO:
-// improve random chooser action
 // add Units skills and statics
 // Add skill's Structures
 // Add threads to the last Structures Units and Skills

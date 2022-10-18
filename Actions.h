@@ -34,9 +34,11 @@ void actionBase(Base* base, entities &allEntities)
         // agrega Worker_generator
         if (rand()%((numberOfStructures+2)/2) == 0) {
             pair<int,int> coords = AreaRandom::getPosition(5,5,allEntities);
-            allEntities.worker_generators.push_back(new Worker_Generator(coords.first,coords.second,base->RACE()));
-            allEntities.worker_generators[allEntities.worker_generators.size()-1]->paint();
-            base->addGold(-200);
+            if (coords.first != 0) {
+                allEntities.worker_generators.push_back(new Worker_Generator(coords.first,coords.second,base->RACE()));
+                allEntities.worker_generators[allEntities.worker_generators.size()-1]->paint();
+                base->addGold(-200);
+            }
         }
     } else if (choose == 3 && base->GOLD()>=200) {
         // agrega Soldier_generator
@@ -46,9 +48,11 @@ void actionBase(Base* base, entities &allEntities)
         // agrega Worker_generator
         if (rand()%((numberOfStructures+2)/2) == 0) {
             pair<int,int> coords = AreaRandom::getPosition(5,5,allEntities);
-            allEntities.soldier_generators.push_back(new Soldier_Generator(coords.first,coords.second,base->RACE()));
-            allEntities.soldier_generators[allEntities.soldier_generators.size()-1]->paint();
-            base->addGold(-200);
+            if (coords.first != 0) {
+                allEntities.soldier_generators.push_back(new Soldier_Generator(coords.first,coords.second,base->RACE()));
+                allEntities.soldier_generators[allEntities.soldier_generators.size()-1]->paint();
+                base->addGold(-200);
+            }
         }
     }  
     if (base->GOLD()>=1000) {

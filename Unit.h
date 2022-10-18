@@ -5,7 +5,10 @@
 class Unit : public Entity {
     int x,y,speed,health,damage;
     public:
-        Unit(int _x, int _y, char _type, char _race): Entity(_type, _race), x(_x), y(_y)  {}
+        Unit(int _x, int _y, char _type, char _race): Entity(_type, _race), x(_x), y(_y)  {
+            health = 50;
+            damage = 10;
+        }
         int SPEED() { return speed;}
         int HEALTH() { return health;}
         int DAMAGE() { return damage;}
