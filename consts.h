@@ -16,6 +16,6 @@
 #define MICRO_DURATION 0
 
 using namespace std;
-
+const int inf = 1e9+7;
 vector<string> charMap;
 set<int> entitiesID;

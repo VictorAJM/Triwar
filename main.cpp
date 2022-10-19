@@ -1,5 +1,4 @@
 ///TODO:
-// Add skill's Structures
 // improve Action Chooser
 // add Kamikaze
 // add Vampire 
@@ -9,6 +8,8 @@
 // Import/Export current state
 
 // FINISH :)
+
+
 #include "consts.h"
 #include "writer.h"
 #include "Entities.h"
@@ -91,6 +92,11 @@ int main()
                 sg->setCD(60);
             }
             sg->setCD(sg->CD()-10);
+        }
+        for (auto _kamikaze : allEntities.kamikazes) {
+            moveKamikaze(_kamikaze, allEntities);
+            drawStats(allEntities);
+            
         }
         for (auto _worker : allEntities.workers) {
             moveWorker(_worker, allEntities);
