@@ -8,7 +8,7 @@ class Entity {
     public:
         Entity(char _type, char _race): type(_type), race(_race) {
             do {
-                id = rand();
+                id = rand()*rand()+rand();
             } while (entitiesID.count(id)>0);
             entitiesID.insert(id);
         }

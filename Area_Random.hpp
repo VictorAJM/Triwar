@@ -15,6 +15,7 @@ namespace AreaRandom {
                 for (auto mineral : allEntities.minerals) if (hitBox(i-1,j-1,x+2,y+2).collisionWith(mineral->getHitBox())) free = false;
                 for (auto worker_generator : allEntities.worker_generators) if (hitBox(i-1,j-1,x+2,y+2).collisionWith(worker_generator->getHitBox())) free = false;
                 for (auto soldier_generator : allEntities.soldier_generators) if (hitBox(i-1,j-1,x+2,y+2).collisionWith(soldier_generator->getHitBox())) free = false;
+                for (auto skill_generator : allEntities.skills_structures) if (hitBox(i-1,j-1,x+2,y+2).collisionWith(skill_generator->getHitBox())) free = false;
                 if (free) possible_positions.push_back(make_pair(i,j));
             }
         }
@@ -33,6 +34,7 @@ namespace AreaRandom {
                 for (auto mineral : allEntities.minerals) if (hitBox(i,j,1,1).collisionWith(mineral->getHitBox())) free = false;
                 for (auto worker_generator : allEntities.worker_generators) if (hitBox(i,j,1,1).collisionWith(worker_generator->getHitBox())) free = false;
                 for (auto soldier_generator : allEntities.soldier_generators) if (hitBox(i,j,1,1).collisionWith(soldier_generator->getHitBox())) free = false;
+                for (auto skill_generator : allEntities.skills_structures) if (hitBox(i,j,1,1).collisionWith(skill_generator->getHitBox())) free = false;
                 if (free) positions.push_back(make_pair(i,j));
             }
         }

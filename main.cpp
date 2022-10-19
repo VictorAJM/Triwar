@@ -1,10 +1,12 @@
 ///TODO:
-// add Units skills and statics
 // Add skill's Structures
+// improve Action Chooser
+// add Kamikaze
+// add Vampire 
 // Add threads to the last Structures Units and Skills
 // Agregar colores a todo
-
 // Save current state of game in files
+// Import/Export current state
 
 // FINISH :)
 #include "consts.h"
@@ -12,7 +14,7 @@
 #include "Entities.h"
 #include "hitBox.h"
 #include "Movements.h"
-#include "Actions.h"
+#include "Actions.hpp"
 #include "Endgame.h"
 #include "StatsBar.h"
 #include "Area_Random.hpp"
@@ -46,6 +48,16 @@ int main()
     for (auto mineral : allEntities.minerals) mineral->paint();
     drawStats(allEntities);
     while (!game_over) {
+        for (auto& st : allEntities.skills_structures) {
+            if (st->CD() == 0 ) {
+                int skill = st->SKILL();
+                int race = st->RACE();
+                actionSkill(st, allEntities);
+                st->setCD(60);
+                st->setSkill();
+            }
+            st->setCD(st->CD()-10);
+        }
         for (auto& wg : allEntities.worker_generators) {
             if (wg->CD() == 0) {
                 // new worker
@@ -53,22 +65,28 @@ int main()
                 if (positions.size()>0) {
                     int pos = rand()%(positions.size());
                     Worker* newWorker = new Worker(positions[pos].first,positions[pos].second,wg->RACE());
+                    newWorker->setHealth(newWorker->HEALTH()+wg->getHealth());
+                    newWorker->setDamage(newWorker->HEALTH()+wg->getDamage());
                     newWorker->paint();
                     allEntities.workers.push_back(newWorker);
+                    drawStats(allEntities);
                 }
                 wg->setCD(60);
             } 
             wg->setCD(wg->CD()-10);
         }
-        for (auto sg : allEntities.soldier_generators) {
+        for (auto& sg : allEntities.soldier_generators) {
             if (sg->CD() == 0) {
                 // new soldier
                 vector<pair<int,int> > positions = AreaRandom::positionAround(sg,allEntities);
                 if (positions.size()>0) {
                     int pos = rand()%(positions.size());
                     Soldier* newSoldier = new Soldier(positions[pos].first,positions[pos].second,sg->RACE());
+                    newSoldier->setHealth(newSoldier->HEALTH()+sg->getHealth());
+                    newSoldier->setDamage(newSoldier->HEALTH()+sg->getDamage());
                     newSoldier->paint();
                     allEntities.soldiers.push_back(newSoldier);
+                    drawStats(allEntities);
                 }
                 sg->setCD(60);
             }
