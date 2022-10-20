@@ -26,7 +26,17 @@ bool getWinner(entities &allEntities)
                 allEntities.soldier_generators.erase(allEntities.soldier_generators.begin()+i);
                 i=0;
             }
-        }
+            for (int i=0;i<allEntities.skills_structures.size();i++) if (frecuency.first==allEntities.skills_structures[i]->RACE()) {
+                allEntities.skills_structures[i]->erase();
+                allEntities.skills_structures.erase(allEntities.skills_structures.begin()+i);
+                i=0;
+            }
+            for (int i=0;i<allEntities.kamikazes.size();i++) if (frecuency.first==allEntities.kamikazes[i]->RACE()) {
+                allEntities.kamikazes[i]->erase();
+                allEntities.kamikazes.erase(allEntities.kamikazes.begin()+i);
+                i=0;
+            }
+         }
         for (auto frecuency : race_frecuency) if (frecuency.second == int(allEntities.workers.size()+allEntities.soldiers.size())) {
             gotoXY(1,1);
             cout << "Winner\n";

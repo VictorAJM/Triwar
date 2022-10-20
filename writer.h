@@ -35,6 +35,12 @@ void crearCharMatrix()
 }
 void pintar_limites()
 {
+    HANDLE handleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD consoleMode;
+    GetConsoleMode(handleOut, &consoleMode);
+    consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    consoleMode |= DISABLE_NEWLINE_AUTO_RETURN;
+    SetConsoleMode(handleOut, consoleMode);
     limpiar_pantalla();
     for (int i=2;i<148;i++) {
         gotoXY(i,3); printf("%c",205); charMap[i][3] = (char)205;

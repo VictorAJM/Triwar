@@ -21,7 +21,8 @@ class Structure : public Entity {
             for (int i=X();i<X()+W();i++) {
                 for (int j=Y();j<Y()+H();j++) {
                     gotoXY(i,j);
-                    printf("%c",TYPE());
+                    
+                    cout << colors[this->RACE()-'a']<<"" << TYPE()<<colors[4];
                 }
             }
         }

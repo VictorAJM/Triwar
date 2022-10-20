@@ -1,9 +1,8 @@
 ///TODO:
 // improve Action Chooser
-// add Kamikaze
+
 // add Vampire 
 // Add threads to the last Structures Units and Skills
-// Agregar colores a todo
 // Save current state of game in files
 // Import/Export current state
 
@@ -56,6 +55,7 @@ int main()
                 actionSkill(st, allEntities);
                 st->setCD(60);
                 st->setSkill();
+                getWinner(allEntities);
             }
             st->setCD(st->CD()-10);
         }
@@ -73,6 +73,7 @@ int main()
                     drawStats(allEntities);
                 }
                 wg->setCD(60);
+                getWinner(allEntities);
             } 
             wg->setCD(wg->CD()-10);
         }
@@ -89,6 +90,7 @@ int main()
                     allEntities.soldiers.push_back(newSoldier);
                     drawStats(allEntities);
                 }
+                getWinner(allEntities);
                 sg->setCD(60);
             }
             sg->setCD(sg->CD()-10);
@@ -96,20 +98,23 @@ int main()
         for (auto _kamikaze : allEntities.kamikazes) {
             moveKamikaze(_kamikaze, allEntities);
             drawStats(allEntities);
-            
+            getWinner(allEntities);
         }
         for (auto _worker : allEntities.workers) {
             moveWorker(_worker, allEntities);
             drawStats(allEntities);
+            getWinner(allEntities);
             Sleep(MICRO_DURATION);
         }
         for (auto _soldier : allEntities.soldiers) {
             moveSoldier(_soldier, allEntities);
             drawStats(allEntities);
+            getWinner(allEntities);
             Sleep(MICRO_DURATION);
         }
         for (auto _base : allEntities.bases) {
             actionBase(_base, allEntities);
+            getWinner(allEntities);
             drawStats(allEntities);
         }
 
