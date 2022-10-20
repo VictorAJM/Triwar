@@ -1,7 +1,7 @@
 ///TODO:
 // improve Action Chooser
-
-// add Vampire 
+// Kamikazes are not working properly
+// add Loco
 // Add threads to the last Structures Units and Skills
 // Save current state of game in files
 // Import/Export current state
@@ -11,7 +11,7 @@
 
 #include "consts.h"
 #include "writer.h"
-#include "Entities.h"
+#include "Entities.h" 
 #include "hitBox.h"
 #include "Movements.h"
 #include "Actions.hpp"
@@ -53,13 +53,13 @@ int main()
                 int skill = st->SKILL();
                 int race = st->RACE();
                 actionSkill(st, allEntities);
-                st->setCD(60);
+                st->setCD(COOLDOWN_GENERATOR);
                 st->setSkill();
                 getWinner(allEntities);
             }
-            st->setCD(st->CD()-10);
+            st->setCD(st->CD()-CD_REDUCTION);
         }
-        for (auto& wg : allEntities.worker_generators) {
+        for (auto wg : allEntities.worker_generators) {
             if (wg->CD() == 0) {
                 // new worker
                 vector<pair<int,int> > positions = AreaRandom::positionAround(wg,allEntities);
@@ -72,12 +72,12 @@ int main()
                     allEntities.workers.push_back(newWorker);
                     drawStats(allEntities);
                 }
-                wg->setCD(60);
+                wg->setCD(COOLDOWN_GENERATOR);
                 getWinner(allEntities);
             } 
-            wg->setCD(wg->CD()-10);
+            wg->setCD(wg->CD()-CD_REDUCTION);
         }
-        for (auto& sg : allEntities.soldier_generators) {
+        for (auto sg : allEntities.soldier_generators) {
             if (sg->CD() == 0) {
                 // new soldier
                 vector<pair<int,int> > positions = AreaRandom::positionAround(sg,allEntities);
@@ -91,9 +91,9 @@ int main()
                     drawStats(allEntities);
                 }
                 getWinner(allEntities);
-                sg->setCD(60);
+                sg->setCD(COOLDOWN_GENERATOR);
             }
-            sg->setCD(sg->CD()-10);
+            sg->setCD(sg->CD()-CD_REDUCTION);
         }
         for (auto _kamikaze : allEntities.kamikazes) {
             moveKamikaze(_kamikaze, allEntities);

@@ -22,7 +22,7 @@ void actionSkill(Skills_Structure* ST, entities &allEntities) {
 void actionBase(Base* base, entities &allEntities)
 {
     int choose = rand()%6;
-    if (choose == 0 && base->GOLD()>=50) {
+    if (choose == 0 && base->GOLD()>=WORKER_COST) {
         // new worker
         vector<pair<int,int> > positions = AreaRandom::positionAround(base,allEntities);
         if (positions.size()>0) {
@@ -32,9 +32,9 @@ void actionBase(Base* base, entities &allEntities)
             newWorker->setDamage(newWorker->HEALTH()+base->getDamage());
             newWorker->paint();
             allEntities.workers.push_back(newWorker);
-            base->addGold(-50);
+            base->addGold(-WORKER_COST);
         }
-    } else if (choose == 1 && base->GOLD()>=50) {
+    } else if (choose == 1 && base->GOLD()>=SOLDIER_COST) {
         // new Soldier
         vector<pair<int,int> > positions = AreaRandom::positionAround(base,allEntities);
         if (positions.size()>0) {
@@ -44,9 +44,9 @@ void actionBase(Base* base, entities &allEntities)
             newSoldier->setDamage(newSoldier->HEALTH()+base->getDamage());
             newSoldier->paint();
             allEntities.soldiers.push_back(newSoldier);
-            base->addGold(-50);
+            base->addGold(-SOLDIER_COST);
         }
-    } else if (choose == 2 && base->GOLD()>=200) {
+    } else if (choose == 2 && base->GOLD()>=WORKER_GENERATOR_COST) {
         int numberOfStructures = 0;
         for (auto sg : allEntities.soldier_generators) if (sg->RACE() == base->RACE()) numberOfStructures++;
         for (auto wg : allEntities.worker_generators) if (wg->RACE() == base->RACE()) numberOfStructures++;
@@ -56,10 +56,10 @@ void actionBase(Base* base, entities &allEntities)
             if (coords.first != 0) {
                 allEntities.worker_generators.push_back(new Worker_Generator(coords.first+1,coords.second+1,base->RACE()));
                 allEntities.worker_generators[allEntities.worker_generators.size()-1]->paint();
-                base->addGold(-200);
+                base->addGold(-WORKER_GENERATOR_COST);
             }
         }
-    } else if (choose == 3 && base->GOLD()>=200) {
+    } else if (choose == 3 && base->GOLD()>=SOLDIER_GENERATOR_COST) {
         // agrega Soldier_generator
         int numberOfStructures = 0;
         for (auto sg : allEntities.soldier_generators) if (sg->RACE() == base->RACE()) numberOfStructures++;
@@ -70,10 +70,10 @@ void actionBase(Base* base, entities &allEntities)
             if (coords.first != 0) {
                 allEntities.soldier_generators.push_back(new Soldier_Generator(coords.first+1,coords.second+1,base->RACE()));
                 allEntities.soldier_generators[allEntities.soldier_generators.size()-1]->paint();
-                base->addGold(-200);
+                base->addGold(-SOLDIER_GENERATOR_COST);
             }
         }
-    } else if (choose == 4 && base->GOLD()>=150) {
+    } else if (choose == 4 && base->GOLD()>=SKILLS_STRUCTURE_COST) {
         int numberOfStructures = 0;
         for (auto sg : allEntities.soldier_generators) if (sg->RACE() == base->RACE()) numberOfStructures++;
         for (auto wg : allEntities.worker_generators) if (wg->RACE() == base->RACE()) numberOfStructures++;
@@ -84,10 +84,10 @@ void actionBase(Base* base, entities &allEntities)
             if (coords.first != 0) {
                 allEntities.skills_structures.push_back(new Skills_Structure(coords.first+1, coords.second+1, base->RACE()));
                 allEntities.skills_structures[allEntities.skills_structures.size()-1]->paint();
-                base->addGold(-150);
+                base->addGold(-SKILLS_STRUCTURE_COST);
             }
         }
-    } else if (choose == 5 && base->GOLD()>=150) {
+    } else if (choose == 5 && base->GOLD()>=KAMIKAZE_COST) {
         int numberOfStructures = 0;
         for (auto sg : allEntities.soldier_generators) if (sg->RACE() != base->RACE()) numberOfStructures++;
         for (auto wg : allEntities.worker_generators) if (wg->RACE() != base->RACE()) numberOfStructures++;
@@ -98,7 +98,7 @@ void actionBase(Base* base, entities &allEntities)
         if (coords.first != 0) {
             allEntities.kamikazes.push_back(new Kamikaze(coords.first,coords.second, base->RACE()));
             allEntities.kamikazes[allEntities.kamikazes.size()-1]->paint();
-            base->addGold(-15);
+            base->addGold(-KAMIKAZE_COST);
         }
     }
     if (base->GOLD()>=1000) {

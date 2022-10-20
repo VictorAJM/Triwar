@@ -8,7 +8,7 @@ class Skills_Structure : public Structure {
     public:
         Skills_Structure(int _x, int _y, char _race) :  Structure(_x, _y, 2,2, 'R',_race) {
             skill = rand()%2;
-            cooldown = 50;
+            cooldown = COOLDOWN_GENERATOR;
             // health, damage
         }
         int SKILL() { return skill;}

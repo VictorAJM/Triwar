@@ -101,11 +101,11 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
             } 
         }
         int myDistance = distance[kamikaze->X()][kamikaze->Y()];
-        if (myDistance <= 1) {
+        if (myDistance == 1) {
    
             bool used = false;
             for (int i=0;i<allEntities.soldier_generators.size();i++) {
-                auto &sg = allEntities.soldier_generators[i];
+                auto sg = allEntities.soldier_generators[i];
                 if (sg->RACE() != kamikaze->RACE() && sg->getHitBox().shareSide(kamikaze->getHitBox())) {
                     sg->erase();
                     allEntities.soldier_generators.erase(allEntities.soldier_generators.begin()+i);
@@ -114,7 +114,7 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
                 } 
             }
             for (int i=0;i<allEntities.worker_generators.size();i++) {
-                auto &wg = allEntities.worker_generators[i];
+                auto wg = allEntities.worker_generators[i];
                 if (wg->RACE() != kamikaze->RACE() && wg->getHitBox().shareSide(kamikaze->getHitBox())) {
                     wg->erase();
                     allEntities.worker_generators.erase(allEntities.worker_generators.begin()+i);
@@ -123,7 +123,7 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
                 } 
             }
             for (int i=0;i<allEntities.skills_structures.size();i++) {
-                auto &ss = allEntities.skills_structures[i];
+                auto ss = allEntities.skills_structures[i];
                 if (ss->RACE() != kamikaze->RACE() && ss->getHitBox().shareSide(kamikaze->getHitBox())) {
                     ss->erase();
                     allEntities.skills_structures.erase(allEntities.skills_structures.begin()+i);
@@ -651,6 +651,8 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
                         myDamage += allEntities.soldiers[i]->DAMAGE();
                         allEntities.soldiers.erase(allEntities.soldiers.begin()+i);
                         i=0;
+                    } else {
+                        myDamage += allEntities.soldiers[i]->DAMAGE();
                     }
                 }
             }
