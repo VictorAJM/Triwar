@@ -52,7 +52,6 @@ namespace AreaRandom {
         vector<pair<int,int> > positions;
         for (int i=sg->X()-1;i<=sg->X()+sg->W();i++) {
             for (int j=sg->Y()-1;j<=sg->Y()+sg->H();j++) {
-                bool free = true;
                 if (freePosition(hitBox(i,j,1,1), allEntities)) positions.push_back(make_pair(i,j));
             }
         }

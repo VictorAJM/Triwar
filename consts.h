@@ -24,7 +24,7 @@
 #define SOLDIER_GENERATOR_COST 900
 #define SKILLS_STRUCTURE_COST 600
 #define KAMIKAZE_COST 300
-#define COOLDOWN_GENERATOR 600
+#define COOLDOWN_GENERATOR 100
 #define CD_REDUCTION 10
 
 using namespace std;
@@ -38,5 +38,5 @@ enum colorString {
     raceC = 2,
     raceM = 3,
     borrar = 4,
-    raceV = 5
+    raceL = 5
 };

@@ -1,11 +1,11 @@
 ///TODO:
-// improve Action Chooser
 // Kamikazes are not working properly
-// add Loco
 // Add threads to the last Structures Units and Skills
 // Save current state of game in files
 // Import/Export current state
 
+// optional add Loco
+// optional add music
 // FINISH :)
 
 
@@ -48,10 +48,8 @@ int main()
     for (auto mineral : allEntities.minerals) mineral->paint();
     drawStats(allEntities);
     while (!game_over) {
-        for (auto& st : allEntities.skills_structures) {
+        for (auto st : allEntities.skills_structures) {
             if (st->CD() == 0 ) {
-                int skill = st->SKILL();
-                int race = st->RACE();
                 actionSkill(st, allEntities);
                 st->setCD(COOLDOWN_GENERATOR);
                 st->setSkill();

@@ -69,7 +69,7 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
             for (int i=_kamikaze->X();i<_kamikaze->X()+w;i++) {
                 for (int j=_kamikaze->Y();j<_kamikaze->Y()+h;j++) {
                     if (_kamikaze->ID() != kamikaze->ID())
-                    visited[i][j]=true;
+                        visited[i][j]=true;
                 }
             }
         }
@@ -104,28 +104,26 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
         if (myDistance == 1) {
    
             bool used = false;
-            for (int i=0;i<allEntities.soldier_generators.size();i++) {
-                auto sg = allEntities.soldier_generators[i];
-                if (sg->RACE() != kamikaze->RACE() && sg->getHitBox().shareSide(kamikaze->getHitBox())) {
-                    sg->erase();
+            for (int i=0;i<(int)allEntities.soldier_generators.size();i++) {
+                if (allEntities.soldier_generators[i]->RACE() != kamikaze->RACE() && allEntities.soldier_generators[i]->getHitBox().shareSide(kamikaze->getHitBox())) {
+                    allEntities.soldier_generators[i]->erase();
                     allEntities.soldier_generators.erase(allEntities.soldier_generators.begin()+i);
                     i=0;
                     used = true;
                 } 
             }
-            for (int i=0;i<allEntities.worker_generators.size();i++) {
-                auto wg = allEntities.worker_generators[i];
-                if (wg->RACE() != kamikaze->RACE() && wg->getHitBox().shareSide(kamikaze->getHitBox())) {
-                    wg->erase();
+            for (int i=0;i<(int)allEntities.worker_generators.size();i++) {
+                if (allEntities.worker_generators[i]->RACE() != kamikaze->RACE() && allEntities.worker_generators[i]->getHitBox().shareSide(kamikaze->getHitBox())) {
+                    allEntities.worker_generators[i]->erase();
                     allEntities.worker_generators.erase(allEntities.worker_generators.begin()+i);
                     i=0;
                     used = true;
                 } 
             }
-            for (int i=0;i<allEntities.skills_structures.size();i++) {
-                auto ss = allEntities.skills_structures[i];
-                if (ss->RACE() != kamikaze->RACE() && ss->getHitBox().shareSide(kamikaze->getHitBox())) {
-                    ss->erase();
+            for (int i=0;i<(int)allEntities.skills_structures.size();i++) {
+
+                if (allEntities.skills_structures[i]->RACE() != kamikaze->RACE() && allEntities.skills_structures[i]->getHitBox().shareSide(kamikaze->getHitBox())) {
+                    allEntities.skills_structures[i]->erase();
                     allEntities.skills_structures.erase(allEntities.skills_structures.begin()+i);
                     i=0;
                     used = true;
@@ -134,19 +132,15 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
 
             if (used) {
                 int id = kamikaze->ID();
-                for (int i=0;i<allEntities.kamikazes.size();i++) {
+                for (int i=0;i<(int)allEntities.kamikazes.size();i++) {
                     if (allEntities.kamikazes[i]->ID() == id) {
                         kamikaze->erase();
                         allEntities.kamikazes.erase(allEntities.kamikazes.begin()+i);
                         i=0;
                     }
                 }
-                return;
             }
-            // if true erase Kamikaze
-            kamikaze->paint();
             return;
-            // else paint return
         }
         bool moved = false;
         if (kamikaze->X()>LEFT_MAP && distance[kamikaze->X()-1][kamikaze->Y()] < myDistance) {
@@ -181,7 +175,7 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
 
         }
             bool used = false;
-            for (int i=0;i<allEntities.soldier_generators.size();i++) {
+            for (int i=0;i<(int)allEntities.soldier_generators.size();i++) {
                 auto &sg = allEntities.soldier_generators[i];
                 if (sg->RACE() != kamikaze->RACE() && sg->getHitBox().shareSide(kamikaze->getHitBox())) {
                     sg->erase();
@@ -190,7 +184,7 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
                     used = true;
                 } 
             }
-            for (int i=0;i<allEntities.worker_generators.size();i++) {
+            for (int i=0;i<(int)allEntities.worker_generators.size();i++) {
                 auto &wg = allEntities.worker_generators[i];
                 if (wg->RACE() != kamikaze->RACE() && wg->getHitBox().shareSide(kamikaze->getHitBox())) {
                     wg->erase();
@@ -199,7 +193,7 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
                     used = true;
                 } 
             }
-            for (int i=0;i<allEntities.skills_structures.size();i++) {
+            for (int i=0;i<(int)allEntities.skills_structures.size();i++) {
                 auto &ss = allEntities.skills_structures[i];
                 if (ss->RACE() != kamikaze->RACE() && ss->getHitBox().shareSide(kamikaze->getHitBox())) {
                     ss->erase();
@@ -211,7 +205,7 @@ void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
 
             if (used) {
                 int id = kamikaze->ID();
-                for (int i=0;i<allEntities.kamikazes.size();i++) {
+                for (int i=0;i<(int)allEntities.kamikazes.size();i++) {
                     if (allEntities.kamikazes[i]->ID() == id) {
                         kamikaze->erase();
                         allEntities.kamikazes.erase(allEntities.kamikazes.begin()+i);
@@ -330,7 +324,7 @@ void moveWorker(Worker* worker, entities &allEntities)
                 if (mineral->getUses()==0) id = mineral->ID();
             }
             if (id!=-1) {
-                for (int i=0;i<allEntities.minerals.size();i++) if (allEntities.minerals[i]->ID() == id) {
+                for (int i=0;i<(int)allEntities.minerals.size();i++) if (allEntities.minerals[i]->ID() == id) {
                     allEntities.minerals[i]->erase();
                     allEntities.minerals.erase(allEntities.minerals.begin()+i);
                     i=0;
@@ -613,7 +607,7 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
         }
         int myDistance = distance[soldier->X()][soldier->Y()];
         if (myDistance == 1) {
-            for (int i=0;i<allEntities.workers.size();i++) {
+            for (int i=0;i<(int)allEntities.workers.size();i++) {
                 if (allEntities.workers[i]->RACE() != soldier->RACE() && allEntities.workers[i]->getHitBox().shareSide(soldier->getHitBox())) {
                     if (soldier->DAMAGE() >= allEntities.workers[i]->HEALTH()) {
                         allEntities.workers[i]->erase();
@@ -622,13 +616,13 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
                     }
                 }
             }
-            for (int i=0;i<allEntities.workers.size();i++) {
+            for (int i=0;i<(int)allEntities.workers.size();i++) {
                 if (allEntities.workers[i]->RACE() != soldier->RACE() && allEntities.workers[i]->getHitBox().shareSide(soldier->getHitBox())) {
                     allEntities.workers[i]->setHealth(allEntities.workers[i]->HEALTH()-soldier->DAMAGE());
                 }
             }
 
-            for (int i=0;i<allEntities.kamikazes.size();i++) {
+            for (int i=0;i<(int)allEntities.kamikazes.size();i++) {
                 if (allEntities.kamikazes[i]->RACE() != soldier->RACE() && allEntities.kamikazes[i]->getHitBox().shareSide(soldier->getHitBox())) {
                     if (soldier->DAMAGE() >= allEntities.kamikazes[i]->HEALTH()) {
                         allEntities.kamikazes[i]->erase();
@@ -637,14 +631,14 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
                     }
                 }
             }
-            for (int i=0;i<allEntities.kamikazes.size();i++) {
+            for (int i=0;i<(int)allEntities.kamikazes.size();i++) {
                 if (allEntities.kamikazes[i]->RACE() != soldier->RACE() && allEntities.kamikazes[i]->getHitBox().shareSide(soldier->getHitBox())) {
                     allEntities.kamikazes[i]->setHealth(allEntities.kamikazes[i]->HEALTH()-soldier->DAMAGE());
                 }
             }
 
             int myDamage = 0;
-            for (int i=0;i<allEntities.soldiers.size();i++) if (allEntities.soldiers[i]->RACE() != soldier->RACE()) {
+            for (int i=0;i<(int)allEntities.soldiers.size();i++) if (allEntities.soldiers[i]->RACE() != soldier->RACE()) {
                 if (allEntities.soldiers[i]->getHitBox().shareSide(soldier->getHitBox())) {
                    if (soldier->DAMAGE() >= allEntities.soldiers[i]->HEALTH()) {
                         allEntities.soldiers[i]->erase();
@@ -656,14 +650,14 @@ void moveSoldier(Soldier* soldier, entities &allEntities)
                     }
                 }
             }
-            for (int i=0;i<allEntities.soldiers.size();i++) if (allEntities.soldiers[i]->RACE() != soldier->RACE()) {
+            for (int i=0;i<(int)allEntities.soldiers.size();i++) if (allEntities.soldiers[i]->RACE() != soldier->RACE()) {
                 if (allEntities.soldiers[i]->getHitBox().shareSide(soldier->getHitBox())) {
                    allEntities.soldiers[i]->setHealth(allEntities.soldiers[i]->HEALTH()-soldier->DAMAGE());
                 }
             }
             if (myDamage >= soldier->HEALTH()) {
                 int id = soldier->ID();
-                for (int i=0;i<allEntities.soldiers.size();i++) {
+                for (int i=0;i<(int)allEntities.soldiers.size();i++) {
                     if (allEntities.soldiers[i]->ID() == id) {
                         allEntities.soldiers[i]->erase();
                         allEntities.soldiers.erase(allEntities.soldiers.begin()+i);
