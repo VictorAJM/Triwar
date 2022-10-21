@@ -1,6 +1,6 @@
 ///TODO:
 // Kamikazes are not working properly
-// Add threads to the last Structures Units and Skills
+// Add threads to draw the Timer Game
 // Save current state of game in files
 // Import/Export current state
 
@@ -18,6 +18,7 @@
 #include "Endgame.h"
 #include "StatsBar.h"
 #include "Area_Random.hpp"
+void *functionCount(void *);
 int main()
 {
     srand(time(NULL));
@@ -36,7 +37,11 @@ int main()
         pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
         allEntities.minerals.push_back(new Mineral(coords.first,coords.second));
     }
+
     Sleep(1000);
+    
+    pthread_t timeThread;
+    pthread_create(&timeThread, NULL, &functionCount, (void*)game_over);
 
     for (int i=0;i<5;i++) {
         for (auto base : allEntities.bases) {
@@ -48,6 +53,7 @@ int main()
     for (auto mineral : allEntities.minerals) mineral->paint();
     drawStats(allEntities);
     while (!game_over) {
+        
         for (auto st : allEntities.skills_structures) {
             if (st->CD() == 0 ) {
                 actionSkill(st, allEntities);
@@ -120,4 +126,17 @@ int main()
         Sleep(MICRO_DURATION);
     }
     return 0;
+}
+void *functionCount(void *ptr)
+{
+    bool a;
+    a=(bool)ptr;
+    for (;;) {
+        pthread_mutex_lock(&count_mutex);
+        timeCounter++;
+        pthread_mutex_unlock(&count_mutex);
+        
+        if (a == true) return(NULL);
+        Sleep(1000);
+    }
 }

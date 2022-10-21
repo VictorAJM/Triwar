@@ -1,7 +1,8 @@
 #pragma once
 #include <windows.h>
-#include <stdio.h>
+#include <pthread.h>
 #include <iostream>
+#include <stdio.h>
 #include <vector>
 #include <string>
 #include <time.h>
@@ -27,6 +28,12 @@
 #define COOLDOWN_GENERATOR 100
 #define CD_REDUCTION 10
 
+
+pthread_mutex_t count_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t condition_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t condition_cond = PTHREAD_COND_INITIALIZER;
+
+
 using namespace std;
 const int inf = 1e9+7;
 vector<string> charMap;
@@ -40,3 +47,4 @@ enum colorString {
     borrar = 4,
     raceL = 5
 };
+int timeCounter = 0;
