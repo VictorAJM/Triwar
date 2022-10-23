@@ -28,4 +28,20 @@ class Unit : public Entity {
         void erase() {
             gotoXY(X(),Y()); printf(" ");
         }
+        string getInfo()
+        {
+            string info = "";
+            info.push_back(TYPE());
+            info.push_back(' ');
+            info.push_back(RACE());
+            info.push_back(' ');
+            info += to_string(X());
+            info.push_back(' ');
+            info += to_string(Y());
+            info.push_back(' ');
+            info += to_string(HEALTH());
+            info.push_back(' ');
+            info += to_string(DAMAGE());
+            return info;
+        }
 };

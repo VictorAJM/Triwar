@@ -52,8 +52,37 @@ int main()
     for (auto _worker : allEntities.workers) _worker->paint();
     for (auto mineral : allEntities.minerals) mineral->paint();
     drawStats(allEntities);
+
     while (!game_over) {
-        
+        if (kbhit()) {
+            char tecla = getch();
+            if (tecla == 's') {
+                game_over = true;
+                // guardar
+                int n = 0;
+                ofstream fout;
+	            fout.open("data.txt");
+                for (auto w : allEntities.workers) n++;
+                for (auto b : allEntities.bases) n++;
+                for (auto s : allEntities.soldiers) n++;
+                for (auto k : allEntities.kamikazes) n++;
+                for (auto wg : allEntities.worker_generators) n++;
+                for (auto m : allEntities.minerals) n++;
+                for (auto sg : allEntities.soldier_generators) n++;
+                for (auto st : allEntities.skills_structures) n++;
+                fout << n << "\n";
+                for (auto w : allEntities.workers) fout << w->getInfo() << "\n";
+                for (auto b : allEntities.bases) fout << b->getInfo() << "\n";
+                for (auto s : allEntities.soldiers) fout << s->getInfo() << "\n";
+                for (auto k : allEntities.kamikazes) fout << k->getInfo() << "\n";
+                for (auto wg : allEntities.worker_generators) fout << wg->getInfo() << "\n";
+                for (auto m : allEntities.minerals) fout << m->getInfo() << "\n";
+                for (auto sg : allEntities.soldier_generators) fout << sg->getInfo() << "\n";
+                for (auto st : allEntities.skills_structures) fout << st->getInfo() << "\n";
+                fout << timeCounter<<"\n";
+                return 0;
+            }
+        }
         for (auto st : allEntities.skills_structures) {
             if (st->CD() == 0 ) {
                 actionSkill(st, allEntities);

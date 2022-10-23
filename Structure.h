@@ -42,4 +42,19 @@ class Structure : public Entity {
             myHitBox.h = H();
             return myHitBox;
         }
+        string getInfo() {
+            string info = "";
+            info.push_back(TYPE());
+            info.push_back(' ');
+            info.push_back(RACE());
+            info.push_back(' ');
+            info += to_string(X());
+            info.push_back(' ');
+            info += to_string(Y());
+            info.push_back(' ');
+            info += to_string(W());
+            info.push_back(' ');
+            info += to_string(H());
+            return info;
+        }
 };

@@ -6,9 +6,12 @@
 #include <vector>
 #include <string>
 #include <time.h>
+#include <conio.h>
 #include <queue>
 #include <set>
 #include <map>
+#include <fstream>
+#include <sstream> 
 
 #define LEFT_MAP 3
 #define RIGHT_MAP 146
