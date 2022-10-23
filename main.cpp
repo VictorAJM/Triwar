@@ -26,33 +26,127 @@ int main()
     ocultarCursor();
     pintar_limites();
     bool game_over = false;
-
+    ifstream fin;
     entities allEntities;
-    for (int i=0;i<3;i++) {
-        pair<int,int> coords = AreaRandom::getPosition(10,10,allEntities);
-        allEntities.bases.push_back(new Base(coords.first,coords.second,'a'+i));
-    }
+    ofstream ferase;
+    try {
+        
+        fin.open("data.txt");
+        bool isEmpty = fin.peek() == EOF;
+        if (!isEmpty) {
+        int n;
+        fin >> n;
+        for (int i=0;i<n;i++) {
+            char type;
+            char race;
+            int x,y,w,h,he,da;
+            fin >> type;
+            if (type=='W') {
+                fin >> race >> x >> y >> h >> he;
+                Worker* w = new Worker(x,y,race);
+                w->setDamage(he);
+                w->setHealth(h);
+                w->paint();
+                allEntities.workers.push_back(w);
+            } else if (type=='S') {
+                fin >> race >> x >> y >> h >> he;
+                Soldier* w = new Soldier(x,y,race);
+                w->setDamage(he);
+                w->setHealth(h);
+                w->paint();
+                allEntities.soldiers.push_back(w);
+            } else if (type=='B') {
+                fin >> race >> x >> y >> w >> h;
+                Base* base = new Base(x,y,race);
+                base->paint();
+                allEntities.bases.push_back(base);
+            } else if (type=='M') {
+                fin >> race >> x >> y >> w >> h;
+                Mineral* m = new Mineral(x,y);
+                m->paint();
+                allEntities.minerals.push_back(m);
+            } else if (type=='Q') {
+                fin >> race >> x >> y >> w >> h;
+                Worker_Generator* wg = new Worker_Generator(x,y,race);
+                wg->paint();
+                allEntities.worker_generators.push_back(wg);
+            } else if (type=='E') {
+                fin >> race >> x >> y >> w >> h;
+                Soldier_Generator* wg = new Soldier_Generator(x,y,race);
+                wg->paint();
+                allEntities.soldier_generators.push_back(wg);
+            } else if (type=='K') {
+                fin >> race >> x >> y >> h >> he;
+                Kamikaze* k = new Kamikaze(x,y,race);
+                k->setDamage(he);
+                k->setHealth(h);
+                k->paint();
+                allEntities.kamikazes.push_back(k);
+            } else if (type=='R') {
+                fin >> race >> x >> y >> w >> h;
+                Skills_Structure* wg = new Skills_Structure(x,y,race);
+                wg->paint();
+                allEntities.skills_structures.push_back(wg);
+            }
+            drawStats(allEntities);
+            
+        }
+        fin >> timeCounter;
+        fin.close();
+        } else {
+        for (int i=0;i<3;i++) {
+            pair<int,int> coords = AreaRandom::getPosition(10,10,allEntities);
+            allEntities.bases.push_back(new Base(coords.first,coords.second,'a'+i));
+        }
 
-    for (int i=0;i<15;i++) {
-        pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
-        allEntities.minerals.push_back(new Mineral(coords.first,coords.second));
-    }
+        for (int i=0;i<15;i++) {
+            pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
+            allEntities.minerals.push_back(new Mineral(coords.first,coords.second));
+        }
 
-    Sleep(1000);
+        Sleep(1000);
+        
+        
+
+        for (int i=0;i<5;i++) {
+            for (auto base : allEntities.bases) {
+                allEntities.workers.push_back(new Worker(base->X()+i,base->Y()-1,base->RACE()));
+            }
+        }
+        for (auto _base : allEntities.bases) _base->paint();
+        for (auto _worker : allEntities.workers) _worker->paint();
+        for (auto mineral : allEntities.minerals) mineral->paint();
+        drawStats(allEntities);
+        }
+    } catch(...) {
+        for (int i=0;i<3;i++) {
+            pair<int,int> coords = AreaRandom::getPosition(10,10,allEntities);
+            allEntities.bases.push_back(new Base(coords.first,coords.second,'a'+i));
+        }
+
+        for (int i=0;i<15;i++) {
+            pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
+            allEntities.minerals.push_back(new Mineral(coords.first,coords.second));
+        }
+
+        Sleep(1000);
+        
+        
+
+        for (int i=0;i<5;i++) {
+            for (auto base : allEntities.bases) {
+                allEntities.workers.push_back(new Worker(base->X()+i,base->Y()-1,base->RACE()));
+            }
+        }
+        for (auto _base : allEntities.bases) _base->paint();
+        for (auto _worker : allEntities.workers) _worker->paint();
+        for (auto mineral : allEntities.minerals) mineral->paint();
+        drawStats(allEntities);
+    }
     
+
     pthread_t timeThread;
     pthread_create(&timeThread, NULL, &functionCount, (void*)game_over);
-
-    for (int i=0;i<5;i++) {
-        for (auto base : allEntities.bases) {
-            allEntities.workers.push_back(new Worker(base->X()+i,base->Y()-1,base->RACE()));
-        }
-    }
-    for (auto _base : allEntities.bases) _base->paint();
-    for (auto _worker : allEntities.workers) _worker->paint();
-    for (auto mineral : allEntities.minerals) mineral->paint();
-    drawStats(allEntities);
-
     while (!game_over) {
         if (kbhit()) {
             char tecla = getch();
