@@ -1,12 +1,17 @@
 #pragma once
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <unistd.h>
+#endif
 #include <pthread.h>
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include <string>
 #include <time.h>
-#include <conio.h>
+#include <ncurses.h>
+#include <curses.h>
 #include <queue>
 #include <set>
 #include <map>
@@ -41,7 +46,8 @@ using namespace std;
 const int inf = 1e9+7;
 vector<string> charMap;
 set<int> entitiesID;
-vector<string> colors = {"\x1b[31m","\x1b[32m","\x1b[34m","\x1b[33m","\x1b[0m","\x1b[107m"};
+vector<string> colors = {"\e[31m","\e[32m","\e[34m","\e[33m","\e[0m","\e[107m"};
+
 enum colorString {
     raceA = 0,
     raceB = 1,

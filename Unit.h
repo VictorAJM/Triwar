@@ -23,10 +23,14 @@ class Unit : public Entity {
             return hitBox(X(),Y(),1,1);
         }
         void paint() {
-            gotoXY(X(),Y()); cout << colors[this->RACE()-'a'] << TYPE()<<colors[4];
+            gotoXY(X(),Y()); 
+            printw("%c",TYPE());
+            refresh();
+            //cout << colors[this->RACE()-'a'] << TYPE()<<colors[4];
         }
         void erase() {
-            gotoXY(X(),Y()); printf(" ");
+            gotoXY(X(),Y()); printw(" ");
+            refresh();
         }
         string getInfo()
         {

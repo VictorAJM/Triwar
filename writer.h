@@ -3,30 +3,15 @@
 #include "consts.h"
 void gotoXY(int x, int y)
 {
-    HANDLE hCon;
-    hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD dwPos;
-    dwPos.X = x;
-    dwPos.Y = y;
-    SetConsoleCursorPosition(hCon, dwPos);
+    move(y,x);
 }
 void ocultarCursor()
 {
-    HANDLE hCon;
-    hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_CURSOR_INFO cci;
-    cci.dwSize = 2;
-    cci.bVisible = FALSE;
-    SetConsoleCursorInfo(hCon, &cci);
+    printf("\e[?25l");
 }
 void limpiar_pantalla()
 {
-    for (int i=0;i<40;i++) {
-        for (int j=0;j<150;j++) {
-            gotoXY(j,i);
-            printf(" ");
-        }
-    }
+    system("clear");
 }
 void crearCharMatrix()
 {
@@ -36,23 +21,22 @@ void crearCharMatrix()
 }
 void pintar_limites()
 {
-    HANDLE handleOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    DWORD consoleMode;
-    GetConsoleMode(handleOut, &consoleMode);
-    consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    consoleMode |= DISABLE_NEWLINE_AUTO_RETURN;
-    SetConsoleMode(handleOut, consoleMode);
-    limpiar_pantalla();
+
+    //limpiar_pantalla();
     for (int i=2;i<148;i++) {
-        gotoXY(i,3); printf("%c",205); charMap[i][3] = (char)205;
-        gotoXY(i,39); printf("%c",205);charMap[i][39] = (char)205;
+        try {
+        gotoXY(i,3); printw("#");charMap[i][3] = (char)205;
+        gotoXY(i,39); printw("#");charMap[i][39] = (char)205;
+        } catch(...) {
+            return;
+        }
     }
     for (int i=4;i<39;i++) {
-        gotoXY(2,i); printf("%c",186); charMap[2][i] = (char)186;
-        gotoXY(147,i); printf("%c",186); charMap[147][i] = (char)186;
+        try {
+            gotoXY(2,i); printw("#"); charMap[2][i] = (char)186;
+            gotoXY(147,i); printw("#");charMap[147][i] = (char)186;
+        } catch(...) {
+            return ;
+        }
     }
-    gotoXY(2,3); charMap[2][3] = (char)201; printf("%c",201);
-    gotoXY(2,39); printf("%c",200); charMap[2][39] = (char)200;
-    gotoXY(147,3); printf("%c",187); charMap[147][3] = (char)187;
-    gotoXY(147,39); printf("%c",188); charMap[147][39] = (char)188;
 }

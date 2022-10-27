@@ -20,9 +20,20 @@ class Structure : public Entity {
         void paint() {
             for (int i=X();i<X()+W();i++) {
                 for (int j=Y();j<Y()+H();j++) {
+                     
+    
+                    init_pair(1, COLOR_WHITE, COLOR_WHITE);
+                    attron(COLOR_PAIR(1));
                     gotoXY(i,j);
-                    
-                    cout << colors[this->RACE()-'a']<<"" << TYPE()<<colors[4];
+                  
+                   
+                    printw("%c",TYPE());
+                    refresh();
+                    attroff(COLOR_PAIR(1));
+                 
+                    refresh();
+                    //cout << colors[4];
+                    //cout << colors[this->RACE()-'a']<< TYPE()<<colors[4];
                 }
             }
         }
@@ -30,7 +41,9 @@ class Structure : public Entity {
             for (int i=X();i<X()+W();i++) {
                 for (int j=Y();j<Y()+H();j++) {
                     gotoXY(i,j);
-                    cout << " "<<colors[4];
+                    printw(" ");
+                    refresh();
+                    //printfw(" %s",colors[4]);
                 }
             }
         }

@@ -1,13 +1,8 @@
 ///TODO:
 // Kamikazes are not working properly
-// Add threads to draw the Timer Game
-// Save current state of game in files
-// Import/Export current state
-
-// optional add Loco
-// optional add music
+// set colors for each unit & structure
+// when game ends erase data.txt
 // FINISH :)
-
 
 #include "consts.h"
 #include "writer.h"
@@ -19,70 +14,83 @@
 #include "StatsBar.h"
 #include "Area_Random.hpp"
 void *functionCount(void *);
+
 int main()
 {
+    initscr();
+     start_color();
+    clear();
+    noecho();
+    cbreak();
+    keypad(stdscr, true);
     srand(time(NULL));
     crearCharMatrix();
-    ocultarCursor();
-    pintar_limites();
+    //init_pair(1, COLOR_RED, COLOR_GREEN);
     bool game_over = false;
     ifstream fin;
     entities allEntities;
     ofstream ferase;
-    try {
+   
         
+        try {
         fin.open("data.txt");
-        bool isEmpty = fin.peek() == EOF;
+        } catch(...) {
+            cerr << "a";
+            return 0;
+        }
+        bool isEmpty = true;
         if (!isEmpty) {
         int n;
         fin >> n;
+        
         for (int i=0;i<n;i++) {
-            char type;
+            string type;
             char race;
             int x,y,w,h,he,da;
+            
             fin >> type;
-            if (type=='W') {
+            if (type=="W") {
                 fin >> race >> x >> y >> h >> he;
                 Worker* w = new Worker(x,y,race);
                 w->setDamage(he);
                 w->setHealth(h);
                 w->paint();
                 allEntities.workers.push_back(w);
-            } else if (type=='S') {
+            } else if (type=="S") {
                 fin >> race >> x >> y >> h >> he;
                 Soldier* w = new Soldier(x,y,race);
                 w->setDamage(he);
                 w->setHealth(h);
                 w->paint();
                 allEntities.soldiers.push_back(w);
-            } else if (type=='B') {
+            } else if (type=="B") {
                 fin >> race >> x >> y >> w >> h;
                 Base* base = new Base(x,y,race);
                 base->paint();
                 allEntities.bases.push_back(base);
-            } else if (type=='M') {
+            } else if (type=="M") {
                 fin >> race >> x >> y >> w >> h;
                 Mineral* m = new Mineral(x,y);
                 m->paint();
                 allEntities.minerals.push_back(m);
-            } else if (type=='Q') {
+            } else if (type=="Q") {
                 fin >> race >> x >> y >> w >> h;
                 Worker_Generator* wg = new Worker_Generator(x,y,race);
                 wg->paint();
                 allEntities.worker_generators.push_back(wg);
-            } else if (type=='E') {
+            } else if (type=="E") {
                 fin >> race >> x >> y >> w >> h;
                 Soldier_Generator* wg = new Soldier_Generator(x,y,race);
                 wg->paint();
                 allEntities.soldier_generators.push_back(wg);
-            } else if (type=='K') {
+            } else if (type=="K") {
                 fin >> race >> x >> y >> h >> he;
                 Kamikaze* k = new Kamikaze(x,y,race);
                 k->setDamage(he);
                 k->setHealth(h);
                 k->paint();
                 allEntities.kamikazes.push_back(k);
-            } else if (type=='R') {
+            } else if (type=="R") {
                 fin >> race >> x >> y >> w >> h;
                 Skills_Structure* wg = new Skills_Structure(x,y,race);
                 wg->paint();
@@ -103,9 +111,6 @@ int main()
             pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
             allEntities.minerals.push_back(new Mineral(coords.first,coords.second));
         }
-
-        Sleep(1000);
-        
         
 
         for (int i=0;i<5;i++) {
@@ -118,39 +123,18 @@ int main()
         for (auto mineral : allEntities.minerals) mineral->paint();
         drawStats(allEntities);
         }
-    } catch(...) {
-        for (int i=0;i<3;i++) {
-            pair<int,int> coords = AreaRandom::getPosition(10,10,allEntities);
-            allEntities.bases.push_back(new Base(coords.first,coords.second,'a'+i));
-        }
-
-        for (int i=0;i<15;i++) {
-            pair<int,int> coords = AreaRandom::getPosition(3,3, allEntities);
-            allEntities.minerals.push_back(new Mineral(coords.first,coords.second));
-        }
-
-        Sleep(1000);
-        
-        
-
-        for (int i=0;i<5;i++) {
-            for (auto base : allEntities.bases) {
-                allEntities.workers.push_back(new Worker(base->X()+i,base->Y()-1,base->RACE()));
-            }
-        }
-        for (auto _base : allEntities.bases) _base->paint();
-        for (auto _worker : allEntities.workers) _worker->paint();
-        for (auto mineral : allEntities.minerals) mineral->paint();
-        drawStats(allEntities);
-    }
+    
     
 
     pthread_t timeThread;
     pthread_create(&timeThread, NULL, &functionCount, (void*)game_over);
+    ocultarCursor();
+    pintar_limites();
     while (!game_over) {
-        if (kbhit()) {
-            char tecla = getch();
-            if (tecla == 's') {
+        int c;
+        if ((c = getch()) == 's') {
+
+          
                 game_over = true;
                 // guardar
                 int n = 0;
@@ -175,7 +159,7 @@ int main()
                 for (auto st : allEntities.skills_structures) fout << st->getInfo() << "\n";
                 fout << timeCounter<<"\n";
                 return 0;
-            }
+            
         }
         for (auto st : allEntities.skills_structures) {
             if (st->CD() == 0 ) {
@@ -231,13 +215,21 @@ int main()
             moveWorker(_worker, allEntities);
             drawStats(allEntities);
             getWinner(allEntities);
-            Sleep(MICRO_DURATION);
+                    try {
+        sleep(MICRO_DURATION);
+        } catch(...) {
+            
+        }
         }
         for (auto _soldier : allEntities.soldiers) {
             moveSoldier(_soldier, allEntities);
             drawStats(allEntities);
             getWinner(allEntities);
-            Sleep(MICRO_DURATION);
+                    try {
+        sleep(MICRO_DURATION);
+        } catch(...) {
+            
+        }
         }
         for (auto _base : allEntities.bases) {
             actionBase(_base, allEntities);
@@ -246,7 +238,11 @@ int main()
         }
 
         game_over = getWinner(allEntities);
-        Sleep(MICRO_DURATION);
+                    try {
+        sleep(MICRO_DURATION);
+        } catch(...) {
+            
+        }
     }
     return 0;
 }
@@ -260,6 +256,10 @@ void *functionCount(void *ptr)
         pthread_mutex_unlock(&count_mutex);
         
         if (a == true) return(NULL);
-        Sleep(1000);
+        try {
+            sleep(1);
+        } catch(...) {
+            
+        }
     }
 }
