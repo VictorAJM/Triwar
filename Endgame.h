@@ -39,7 +39,11 @@ bool getWinner(entities &allEntities)
          }
         for (auto frecuency : race_frecuency) if (frecuency.second == int(allEntities.workers.size()+allEntities.soldiers.size())) {
             gotoXY(1,1);
-            cout << "Winner\n";
+            printw("Winner");
+            ofstream fout ;
+            fout.open("data.txt");
+            fout << "";
+            fout.close();
             return true;
         }
         return false;

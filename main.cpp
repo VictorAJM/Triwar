@@ -1,6 +1,5 @@
 ///TODO:
-// Kamikazes are not working properly
-// FINISH :)
+
 
 #include "consts.h"
 #include "writer.h"

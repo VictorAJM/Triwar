@@ -319,7 +319,7 @@ void moveWorker(Worker* worker, entities &allEntities)
             worker->paint();
             int id = -1;
             for (auto mineral : allEntities.minerals) if (worker->getHitBox().shareSide(mineral->getHitBox())) {
-                worker->setGold(30);
+                worker->setGold(30+timeCounter/10);
                 mineral->setUses(mineral->getUses()-1);
                 if (mineral->getUses()==0) id = mineral->ID();
             }
