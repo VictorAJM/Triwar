@@ -29,13 +29,14 @@ bool is_Empty(std::ifstream& pFile)
 
 int main()
 {
+    ocultarCursor();
     initscr();
      start_color();
     clear();
     noecho();
     cbreak();
     keypad(stdscr, true);
-       nodelay(stdscr, TRUE);
+    nodelay(stdscr, TRUE);
 
     scrollok(stdscr, TRUE);
     srand(time(NULL));

@@ -22,7 +22,7 @@ void crearCharMatrix()
 void pintar_limites()
 {
 
-    //limpiar_pantalla();
+    limpiar_pantalla();
     attron(COLOR_PAIR(5));
     for (int i=2;i<148;i++) {
         try {
