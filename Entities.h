@@ -1,14 +1,14 @@
 #pragma once
-#include "Entity.h"
-#include "Structure.h"
-#include "Base.h"
-#include "Mineral.h"
-#include "Unit.h"
-#include "Worker.h"
-#include "Soldier.h"
-#include "Generators.hpp"
-#include "Skills_Structure.hpp"
-#include "Kamikaze.hpp"
+#include "things/Entity.h"
+#include "things/Structure.h"
+#include "things/Base.h"
+#include "things/Mineral.h"
+#include "things/Unit.h"
+#include "things/Worker.h"
+#include "things/Soldier.h"
+#include "things/Generators.hpp"
+#include "things/Skills_Structure.hpp"
+#include "things/Kamikaze.hpp"
 struct entities {
     vector<Base*> bases;
     vector<Worker*> workers;

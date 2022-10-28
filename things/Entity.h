@@ -1,5 +1,5 @@
 #pragma once
-#include "consts.h"
+#include "../consts.h"
 
 class Entity {
     char type;

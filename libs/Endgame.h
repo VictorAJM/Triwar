@@ -1,7 +1,7 @@
 #pragma once
-#include "consts.h"
+#include "../consts.h"
 #include "writer.h"
-#include "Entities.h"
+#include "../Entities.h"
 bool getWinner(entities &allEntities)
 {
     for (auto base : allEntities.bases) if (base->GOLD()>30000) return true;

@@ -1,6 +1,6 @@
 #pragma once
-#include "consts.h"
-#include "Entities.h"
+#include "../consts.h"
+#include "../Entities.h"
 
 void drawStats(entities &allEntities)
 {
@@ -14,10 +14,6 @@ void drawStats(entities &allEntities)
             for (auto soldier : allEntities.soldiers) if (soldier->RACE() == i) nS++;
             for (auto kamikaze : allEntities.kamikazes) if (kamikaze->RACE() == i) nK++;
             for (auto base : allEntities.bases) if (base->RACE() == i) gg = base->GOLD();
-            /*_stats = colors[i-'a'];
-            _stats.push_back(i);
-            _stats = _stats+ "   G:"+to_string(gg)+" W: "+to_string(nW)+"  S: "+to_string(nS)+"  K: "+to_string(nK);
-            stats = stats+_stats+ "       "+colors[4]; */
             _stats.push_back(i);
             _stats = _stats+ "   G:"+to_string(gg)+" W: "+to_string(nW)+"  S: "+to_string(nS)+"  K: "+to_string(nK);
             stats = stats+_stats+ "       ";

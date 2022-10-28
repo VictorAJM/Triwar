@@ -1,6 +1,6 @@
 #pragma once
-#include "consts.h"
-#include "Entities.h"
+#include "../consts.h"
+#include "../Entities.h"
 #include "hitBox.h"
 namespace AreaRandom {
     bool freePosition(hitBox _hitbox, entities &allEntities)

@@ -1,6 +1,6 @@
 #pragma once
-#include "writer.h"
-#include "consts.h"
+#include "../libs/writer.h"
+#include "../consts.h"
 void gotoXY(int x, int y)
 {
     move(y,x);

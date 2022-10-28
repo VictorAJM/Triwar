@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
-#include "writer.h"
-#include "hitBox.h"
+#include "../libs/hitBox.h"
+#include "../libs/writer.h"
 class Structure : public Entity {
     int x,y,w,h;
     public:

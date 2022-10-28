@@ -1,5 +1,4 @@
 #pragma once
-#include "consts.h"
 #include "Structure.h"
 #include "Worker.h"
 #include "Soldier.h"

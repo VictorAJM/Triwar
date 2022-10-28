@@ -1,6 +1,6 @@
 #pragma once
-#include "consts.h"
-#include "Entities.h"
+#include "../consts.h"
+#include "../Entities.h"
 #include "Area_Random.hpp"
 void moveKamikaze(Kamikaze* kamikaze, entities &allEntities)
 {

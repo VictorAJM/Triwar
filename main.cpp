@@ -2,14 +2,14 @@
 
 
 #include "consts.h"
-#include "writer.h"
+#include "libs/writer.h"
 #include "Entities.h" 
-#include "hitBox.h"
-#include "Movements.h"
-#include "Actions.hpp"
-#include "Endgame.h"
-#include "StatsBar.h"
-#include "Area_Random.hpp"
+#include "libs/hitBox.h"
+#include "libs/Movements.h"
+#include "libs/Actions.hpp"
+#include "libs/Endgame.h"
+#include "libs/StatsBar.h"
+#include "libs/Area_Random.hpp"
 void *functionCount(void *);
 int kbhit(void)
 {
