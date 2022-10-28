@@ -31,7 +31,7 @@ int main()
 {
     ocultarCursor();
     initscr();
-     start_color();
+    start_color();
     clear();
     noecho();
     cbreak();
