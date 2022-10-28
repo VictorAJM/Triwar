@@ -23,6 +23,7 @@ void pintar_limites()
 {
 
     //limpiar_pantalla();
+    attron(COLOR_PAIR(5));
     for (int i=2;i<148;i++) {
         try {
         gotoXY(i,3); printw("#");charMap[i][3] = (char)205;
@@ -39,4 +40,5 @@ void pintar_limites()
             return ;
         }
     }
+     attroff(COLOR_PAIR(5));
 }

@@ -25,7 +25,12 @@ int main()
     keypad(stdscr, true);
     srand(time(NULL));
     crearCharMatrix();
-    //init_pair(1, COLOR_RED, COLOR_GREEN);
+    
+    colors.push_back(init_pair(3, COLOR_RED, COLOR_BLACK));
+    colors.push_back(init_pair(1, COLOR_GREEN, COLOR_BLACK));
+    colors.push_back(init_pair(2, COLOR_BLUE, COLOR_BLACK));
+    colors.push_back(init_pair(4, COLOR_YELLOW, COLOR_BLACK));
+    colors.push_back(init_pair(5, COLOR_WHITE, COLOR_WHITE));
     bool game_over = false;
     ifstream fin;
     entities allEntities;

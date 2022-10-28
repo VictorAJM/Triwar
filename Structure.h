@@ -22,14 +22,14 @@ class Structure : public Entity {
                 for (int j=Y();j<Y()+H();j++) {
                      
     
-                    init_pair(1, COLOR_WHITE, COLOR_WHITE);
-                    attron(COLOR_PAIR(1));
+            
+                    attron(COLOR_PAIR(RACE()-'a'+1));
                     gotoXY(i,j);
                   
                    
                     printw("%c",TYPE());
                     refresh();
-                    attroff(COLOR_PAIR(1));
+                    attroff(COLOR_PAIR(RACE()-'a'+1));
                  
                     refresh();
                     //cout << colors[4];

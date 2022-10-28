@@ -46,14 +46,12 @@ using namespace std;
 const int inf = 1e9+7;
 vector<string> charMap;
 set<int> entitiesID;
-vector<string> colors = {"\e[31m","\e[32m","\e[34m","\e[33m","\e[0m","\e[107m"};
-
+vector<int> colors;
 enum colorString {
-    raceA = 0,
-    raceB = 1,
-    raceC = 2,
-    raceM = 3,
-    borrar = 4,
+    raceA = 1,
+    raceB = 2,
+    raceC = 3,
+    raceM = 4,
     raceL = 5
 };
 int timeCounter = 0;

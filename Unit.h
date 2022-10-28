@@ -24,8 +24,10 @@ class Unit : public Entity {
         }
         void paint() {
             gotoXY(X(),Y()); 
+            attron(COLOR_PAIR(RACE()-'a'+1));
             printw("%c",TYPE());
             refresh();
+            attroff(COLOR_PAIR(RACE()-'a'+1));
             //cout << colors[this->RACE()-'a'] << TYPE()<<colors[4];
         }
         void erase() {
